@@ -12,3 +12,5 @@ matplotlib
 xlrd
 future
 chardet
+pyarrow
+fastparquet

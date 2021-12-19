@@ -8,24 +8,59 @@ on:
     types: [opened, synchronize] #labeled, assigned]
 
 jobs:
+
   build-and-test:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8]  # 2.7, 
+        include:
+          - os: ubuntu-18.04
+            wxpython: https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-18.04/wxPython-4.1.0-cp37-cp37m-linux_x86_64.whl
+            python: xvfb-run python3
+            pip_arg: ""
+            python-version: 3.7
+          - os: ubuntu-18.04
+            wxpython: https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-18.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
+            python: xvfb-run python3
+            pip_arg: ""
+            python-version: 3.8
+          - os: windows-2019
+            wxpython: wxpython
+            python: python
+            pip_arg: --user
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@main
         with:
           submodules: recursive
+
+      #libwebkitgtk-dev 
+      #libgstreamer-plugins-base0.10-dev
+      #- name: System dependencies
+      #  run: sudo apt-get install libjpeg-dev libtiff-dev libgtk2.0-dev libsdl1.2-dev freeglut3 freeglut3-dev libnotify-dev libgstreamerd-3-dev
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+
+      # See https://github.com/NREL/EP-Launch/actions/runs/393978357/workflow
+      - name: Install wxpython
+        shell: bash
+        run: pip install ${{ matrix.pip_arg }} ${{ matrix.wxpython }}
+
+      - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install ${{ matrix.pip_arg }} -r requirements.txt
+
+      - name: Set up weio
+        run: |
+          cd weio 
+          pip install -e . 
+          cd ..
+
       - name: Test with pytest
         run: |
           pip install -e .
