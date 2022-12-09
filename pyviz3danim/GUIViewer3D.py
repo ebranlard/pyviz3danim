@@ -2,6 +2,9 @@ import os
 import wx
 import numpy as np
 from .GUIlib import Warn, Error, MyExceptionHook, MyWxApp
+import weio
+print('>>> weio path:',weio.__file__)
+from weio import WrongFormatError, FormatNotDetectedError
 
 # Implement File Drop Target class
 class FileDropTarget(wx.FileDropTarget):
@@ -90,17 +93,12 @@ class Viewer3DPanel(wx.Panel):
         print('>>> Load',add, filenames[0])
         if add is False:
             self.manager.clearObjects()
-        import weio.weio as weio
-        from weio import WrongFormatError, FormatNotDetectedError
         #Graph = weio.FASTInputFile(filename).toGraph()
         try:
             f = weio.read(filenames[0])
         except WrongFormatError as e:
             raise e 
-        try:
-            Graph=f.toGraph()
-        except:
-            raise  
+        Graph=f.toGraph(propToNodes=True, propToElem=True)
 
         self.manager.addGraph(Graph)
         self.manager.loadObjects()
