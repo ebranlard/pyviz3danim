@@ -3,3 +3,4 @@ _*
 !__init__.py
 *.pyc
 *.png
+*.bat

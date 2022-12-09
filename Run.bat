@@ -1,1 +1,1 @@
-start "" /D "C:/Work/_libs/viz3Danim/" /b python viz3danim.py
+start "" /D "C:/Work/_libs/pyviz3Danim/" /b python pyviz3danim.py

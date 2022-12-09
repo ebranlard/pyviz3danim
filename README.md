@@ -16,6 +16,10 @@ The python app can open SubDyn and HydroDyn inputs files (.dat), and SubDyn yaml
 git clone --recurse-submodules http://github.com/ebranlard/pyviz3danim
 cd pyviz3danim
 python -m pip install -r requirements.txt
+
+cd weio
+python -m pip install -e .
+cd ..
 ```
 
 If you forgot the `recurse-submodules` flag, and you end up with errors that `weio` is missing, type the following:
