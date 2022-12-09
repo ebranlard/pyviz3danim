@@ -2,7 +2,11 @@ import os
 import wx
 import numpy as np
 from .GUIlib import Warn, Error, MyExceptionHook, MyWxApp
-import weio
+try:
+    import weio.weio as weio
+except:
+    import weio
+
 print('>>> weio path:',weio.__file__)
 from weio import WrongFormatError, FormatNotDetectedError
 
