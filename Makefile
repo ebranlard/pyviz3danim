@@ -15,7 +15,7 @@ all: test
 
 # --- Rules for python app
 test:
-	python pyviz3danim.py examples/_MT100_SD.dat
+	python pyviz3danim.py examples/MT100_SD.dat
 # 	python pyviz3danim.py examples/Monopile.SD.sum.yaml
 
 tests:

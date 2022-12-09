@@ -4,13 +4,12 @@ pyrr
 wxpython
 xlrd
 fastparquet
-
 matplotlib 
 openpyxl 
 numpy
 pandas
-pyarrow # for parquet files
+pyarrow  # for parquet files
 scipy
-chardet
-xarray # for netcdf files
-nptdms # for TDMS files
+chardet  #
+xarray   # for netcdf files
+nptdms   # for TDMS files
